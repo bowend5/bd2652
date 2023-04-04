@@ -69,4 +69,4 @@ This dataset contains an airline passenger satisfaction survey.We want to know w
 
 
 ## The models we intend to use: 
-random forest, lightGBM, XGboost
+random forest(white box), lightGBM(black box), KNN(black box), logistic regression(white box)
