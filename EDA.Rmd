@@ -1,0 +1,226 @@
+---
+title: "EDA"
+output: html_document
+date: "2023-04-18"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+# Data science
+library(tidyverse)
+library(DataExplorer)
+library(skimr)
+library(lubridate)
+
+# Modeling
+library(tidymodels)
+library(caret)
+
+# Visualization
+library(ggrepel)
+library(GGally)
+library(vip)
+library(patchwork)
+library(ggplot2)
+
+# Tables
+library(gt)
+library(catboost)
+
+```
+
+```{r}
+train <- read.csv("train.csv",stringsAsFactors = F)
+test <- read.csv("test.csv",stringsAsFactors = F)
+options(scipen=999) # erase 'e' in number
+options(warn = -1)
+
+```
+```{r}
+
+# Train data
+plot_missing(train,title='NA value in Train dataset')
+
+#Test data
+plot_missing(test,title='NA value in Test dataset')
+
+
+```
+```{r}
+miceresult <- mice::mice(train,seed=123,m=5)#the m is the number of divide
+miceresult
+train <- mice::complete(miceresult,1) #romove the missing values in the train set
+miceresult <- mice::mice(test,seed=123,m=5)#the m is the number of divide
+miceresult
+test <- mice::complete(miceresult,1)#remove the missing values in the test set
+```
+```{r}
+age1<- ggplot(data = train, aes( x = Age)) + 
+  geom_density(fill="lightblue", color="black", alpha=0.8) +
+  labs(title = "Distribution of Age", 
+       subtitle = "Airline Passenger Satisfaction, Kaggle(2021.08)")
+
+age2 <- train %>%
+  mutate(satisfaction = recode(satisfaction, `0` = "neutral or dissatisfied", `1` = "satisfied")) %>%
+  ggplot(aes(x = Age, fill = satisfaction)) +
+  geom_density(alpha = 0.5) +
+  labs(x = NULL) +
+  theme_bw() +
+  facet_wrap(~satisfaction)
+
+age1/age2
+
+#flight distance histogram
+flight1<- ggplot(data = train, aes( x = Flight.Distance)) + 
+  geom_density(fill="lightblue", color="black", alpha=0.8) +
+  labs(title = "Distribution of Flight.Distance", 
+       subtitle = "Airline Passenger Satisfaction, Kaggle(2021.08)")
+
+flight2 <- train %>%
+  mutate(satisfaction = recode(satisfaction, `0` = "neutral or dissatisfied", `1` = "satisfied")) %>%
+  ggplot(aes(x = Flight.Distance, fill = satisfaction)) +
+  geom_density(alpha = 0.5) +
+  labs(x = NULL) +
+  theme_bw() +
+  facet_wrap(~satisfaction)
+
+flight1/flight2
+
+
+```
+
+```{r}
+#Arrival.Delay.in.Minutes
+arrive1<- ggplot(data = train, aes( x = Arrival.Delay.in.Minutes)) + 
+  geom_density(fill="lightblue") +
+  xlim(0, 75) +
+  labs(title = "Distribution of Arrival.Delay.in.Minutes", 
+       subtitle = "Airline Passenger Satisfaction, Kaggle(2021.08)")
+
+arrive2 <- train %>%
+  mutate(satisfaction = recode(satisfaction, `0` = "neutral or dissatisfied", `1` = "satisfied")) %>%
+  ggplot(aes(x = Arrival.Delay.in.Minutes, fill = satisfaction)) +
+  geom_density(alpha = 0.5) +
+  xlim(0, 75) +
+  labs(x = NULL) +
+  theme_bw() +
+  facet_wrap(~satisfaction)
+
+arrive1/arrive2
+
+#Departure.Delay.in.Minutes
+depart1<- ggplot(data = train, aes( x = Departure.Delay.in.Minutes)) + 
+  geom_density(fill="lightblue") +
+  xlim(0, 75) +
+  labs(title = "Distribution of Departure.Delay.in.Minutes", 
+       subtitle = "Airline Passenger Satisfaction, Kaggle(2021.08)")
+
+depart2 <- train %>%
+  mutate(satisfaction = recode(satisfaction, `0` = "neutral or dissatisfied", `1` = "satisfied")) %>%
+  ggplot(aes(x = Departure.Delay.in.Minutes, fill = satisfaction)) +
+  geom_density(alpha = 0.5) +
+  xlim(0, 75) +
+  labs(x = NULL) +
+  theme_bw() +
+  facet_wrap(~satisfaction)
+
+depart1/depart2
+#Check the distribution of numerical features
+
+```
+
+```{r}
+train %>% 
+  select(,9:16) %>% 
+  plot_histogram(theme_config = theme_bw(), 
+                 geom_histogram_args = list(fill = "salmon"),title = "Scored Variables distirbution in trianset(1)")
+
+train %>% 
+  select(,17:22) %>% 
+  plot_histogram(theme_config = theme_bw(), 
+                 geom_histogram_args = list(fill = "lightblue"),title = "Scored Variables distirbution in trianset(2)")
+#Check distribution of the score variables. Those are more categorical than numercial
+
+```
+
+```{r}
+c5 <- train %>% 
+  mutate(satisfaction = recode(satisfaction, `0` = "neutral or dissatisfied", `1` = "satisfied")) %>%
+  count(satisfaction) %>% 
+  ggplot(aes(x = satisfaction, y = n, fill = satisfaction)) +
+  geom_bar(stat = "identity", colour = "black", alpha = 0.75) +
+  geom_text(aes(label = n), position=position_dodge(width=0.9), vjust=-0.5) +
+  ylim(0, 60000) +
+  labs(y = "Count") +
+  theme_bw()  + ggtitle("Sactisfaction variable in Train Dataset")
+
+c1 <-train %>% 
+  mutate(Gender = recode(Gender, `0` = "Female", `1` = "Male")) %>%
+  count(Gender) %>% 
+  ggplot(aes(x = Gender, y = n, fill = Gender)) +
+  geom_bar(stat = "identity", colour = "black", alpha = 0.75) +
+  geom_text(aes(label = n), position=position_dodge(width=0.9), vjust=-0.5) +
+  ylim(0, 60000) +
+  labs(y = "Count") +
+  theme_bw()  + ggtitle("Gender variable in Train Dataset")
+
+c2 <- train %>% 
+  mutate(Customer.Type = recode(Customer.Type, `0` = "disloyal Customer", `1` = "Loyal Customer")) %>%
+  count(Customer.Type) %>% 
+  ggplot(aes(x = Customer.Type, y = n, fill = Customer.Type)) +
+  geom_bar(stat = "identity", colour = "black", alpha = 0.75) +
+  geom_text(aes(label = n), position=position_dodge(width=0.9), vjust=-0.5) +
+  ylim(0, 100000) +
+  labs(y = "Count") +
+  theme_bw() + ggtitle("Customer.Type variable in Train Dataset")
+
+c3 <- train %>% 
+  mutate(Type.of.Travel = recode(Type.of.Travel, `0` = "Business travel", `1` = "Personal Travel")) %>%
+  count(Type.of.Travel) %>% 
+  ggplot(aes(x = Type.of.Travel, y = n, fill = Type.of.Travel)) +
+  geom_bar(stat = "identity", colour = "black", alpha = 0.75) +
+  geom_text(aes(label = n), position=position_dodge(width=0.9), vjust=-0.5) +
+  ylim(0, 100000) +
+  labs(y = "Count") +
+  theme_bw()  + ggtitle("Type.of.Travel variable in Train Dataset")
+
+c4 <- train %>% 
+  mutate(Class = recode(Class, `0` = "Business", `1` = "Eco",`2` = "Eco Plus")) %>%
+  count(Class) %>% 
+  ggplot(aes(x = Class, y = n, fill = Class)) +
+  geom_bar(stat = "identity", colour = "black", alpha = 0.75) +
+  geom_text(aes(label = n), position=position_dodge(width=0.9), vjust=-0.5) +
+  ylim(0, 100000) +
+  labs(y = "Count") +
+  theme_bw() + ggtitle("Class variable in Train Dataset")
+
+c1/c2
+c3/c4
+c5
+#Here we display histogram to demonstrate distribution of character variables. We find that the genders of customers are quite balanced. Majority of the travels are business travels. There are more neutral or dissatisfied reviews than satisfied, but not by a large margin. 
+
+```
+```{r}
+train <- train[,-c(1,2)] #delete the X and id feature
+train[,-c(1,2,4,5,23)] <- scale(train[,-c(1,2,4,5,23)]) #scale the variables except 'Gender','Customer.Type','Type.of.Travel','Class','satisfaction'
+#The score variables are also scaled. 
+```
+
+```{r}
+#factorize the variables
+train$Gender <- factor(train$Gender)
+train$Customer.Type <- factor(train$Customer.Type)
+train$Type.of.Travel <- factor(train$Type.of.Travel)
+train$Class <- factor(train$Class)
+train$satisfaction <- factor(train$satisfaction)
+
+test$Gender <- factor(test$Gender)
+test$Customer.Type <- factor(test$Customer.Type)
+test$Type.of.Travel <- factor(test$Type.of.Travel)
+test$Class <- factor(test$Class)
+test$satisfaction <- factor(test$satisfaction)
+
+```
