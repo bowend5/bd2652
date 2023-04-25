@@ -1,2 +1,68 @@
 # [Model 1]
 
+At first, we approach with a logistic regression. 
+```{r}
+library(broom)
+library(tidyverse)
+library(caret)
+library(MASS)
+```
+```{r}
+train$Inflight.wifi.service = as.factor(train$Inflight.wifi.service)
+train$Departure.Arrival.time.convenient = as.factor(train$Departure.Arrival.time.convenient)
+train$Ease.of.Online.booking = as.factor(train$Ease.of.Online.booking) 
+train$Gate.location = as.factor(train$Gate.location)
+train$Food.and.drink = as.factor(train$Food.and.drink)
+train$Online.boarding = as.factor(train$Online.boarding)
+train$Seat.comfort = as.factor(train$Seat.comfort)
+train$Inflight.entertainment = as.factor(train$Inflight.entertainment)
+train$On.board.service = as.factor(train$On.board.service)
+train$Leg.room.service = as.factor(train$Leg.room.service)
+train$Baggage.handling = as.factor(train$Baggage.handling)
+train$Checkin.service = as.factor(train$Checkin.service)
+train$Inflight.service = as.factor(train$Inflight.service)
+train$Cleanliness = as.factor(train$Cleanliness)
+train$satisfaction  = as.factor(train$satisfaction )
+```
+
+```{r}
+test$Inflight.wifi.service = as.factor(test$Inflight.wifi.service)
+test$Departure.Arrival.time.convenient = as.factor(test$Departure.Arrival.time.convenient)
+test$Ease.of.Online.booking = as.factor(test$Ease.of.Online.booking) 
+test$Gate.location = as.factor(test$Gate.location)
+test$Food.and.drink = as.factor(test$Food.and.drink)
+test$Online.boarding = as.factor(test$Online.boarding)
+test$Seat.comfort = as.factor(test$Seat.comfort)
+test$Inflight.entertainment = as.factor(test$Inflight.entertainment)
+test$On.board.service = as.factor(test$On.board.service)
+test$Leg.room.service = as.factor(test$Leg.room.service)
+test$Baggage.handling = as.factor(test$Baggage.handling)
+test$Checkin.service = as.factor(test$Checkin.service)
+test$Inflight.service = as.factor(test$Inflight.service)
+test$Cleanliness = as.factor(test$Cleanliness)
+test$satisfaction  = as.factor(test$satisfaction )
+```
+
+
+```{r}
+set.seed(5293)
+mod_logit1 <- glm(satisfaction ~ Gender + Customer.Type + Age + 
+                 Type.of.Travel + Class + Flight.Distance + Inflight.wifi.service + 
+                 Departure.Arrival.time.convenient + Ease.of.Online.booking + 
+                 Gate.location + Food.and.drink + Online.boarding + Seat.comfort +
+                 Inflight.entertainment + On.board.service + Leg.room.service +
+                 Baggage.handling + Checkin.service + Inflight.service +
+                 Cleanliness + Departure.Delay.in.Minutes + Arrival.Delay.in.Minutes , data = train, family = "binomial")
+summary(mod_logit1)
+
+```
+
+```{r}
+mod_logit2 <- glm(satisfaction ~ Gender + Customer.Type + Age + Type.of.Travel + Class + 
+                  Departure.Arrival.time.convenient + Ease.of.Online.booking + 
+                   Online.boarding  +
+                   Leg.room.service +
+                  Baggage.handling + Checkin.service + Inflight.service +
+                  Cleanliness + Departure.Delay.in.Minutes + Arrival.Delay.in.Minutes , data = train, family = "binomial")
+```
+
