@@ -53,16 +53,43 @@ mod_logit1 <- glm(satisfaction ~ Gender + Customer.Type + Age +
                  Inflight.entertainment + On.board.service + Leg.room.service +
                  Baggage.handling + Checkin.service + Inflight.service +
                  Cleanliness + Departure.Delay.in.Minutes + Arrival.Delay.in.Minutes , data = train, family = "binomial")
+```
+```{r}
 summary(mod_logit1)
 
 ```
+```{r}
+#Check the effects of departure delay since it exhibits strange behavior
+library(effects)
+plot(Effect(focal.predictors = c("Departure.Delay.in.Minutes"), mod = mod_logit1))
+```
 
 ```{r}
-mod_logit2 <- glm(satisfaction ~ Gender + Customer.Type + Age + Type.of.Travel + Class + 
-                  Departure.Arrival.time.convenient + Ease.of.Online.booking + 
-                   Online.boarding  +
-                   Leg.room.service +
-                  Baggage.handling + Checkin.service + Inflight.service +
-                  Cleanliness + Departure.Delay.in.Minutes + Arrival.Delay.in.Minutes , data = train, family = "binomial")
+#Refit with significant variables
+mod_logit2 <- glm(satisfaction ~ Gender + Customer.Type + Age + 
+                 Type.of.Travel + Class + Flight.Distance + Inflight.wifi.service + 
+                 Departure.Arrival.time.convenient + Ease.of.Online.booking + 
+                 Gate.location + Food.and.drink + Online.boarding + Seat.comfort +
+                 Inflight.entertainment + On.board.service + Leg.room.service +
+                 Baggage.handling + Checkin.service + Inflight.service +
+                 Cleanliness + Departure.Delay.in.Minutes  , data = train, family = "binomial")
 ```
+
+```{r}
+summary(mod_logit2)
+#After removing the arrival delay feature, we find the depature delay variable behaves as what supposed
+```
+
+```{r}
+pred <- predict(mod_logit2, type = "response", newdata = test)
+confusion_matrix <- table(test$satisfaction, pred>0.7)
+row.names(confusion_matrix)<- c("neutral or dissatisfied", "satisfied")
+noquote("Confusion Matrix")
+confusion_matrix
+accuracy=(confusion_matrix[1]+confusion_matrix[4])/25976
+accuracy
+```
+
+
+
 

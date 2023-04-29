@@ -29,7 +29,8 @@ mod_rf=randomForest(satisfaction ~ Gender + Customer.Type + Age + Type.of.Travel
 ```{r}
 pred=predict(mod_rf,test,type='class')
 table(pred,test$satisfaction)
-mean(pred==test$satisfaction)
+accuracy=mean(pred==test$satisfaction)
+accuracy
 ```
 
 

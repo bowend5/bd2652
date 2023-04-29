@@ -1,5 +1,58 @@
 # [Model 3]
 We are going to set up and try catboost
+
+```{r}
+library(catboost)
+```
+
+
+```{r}
+set.seed(5293)
+train <- read.csv("train.csv",stringsAsFactors = F)
+test <- read.csv("test.csv",stringsAsFactors = F)
+options(scipen=999) # erase 'e' in number
+options(warn = -1)
+
+```
+```{r}
+
+# Train data
+plot_missing(train,title='NA value in Train dataset')
+
+#Test data
+plot_missing(test,title='NA value in Test dataset')
+
+
+```
+```{r}
+miceresult <- mice::mice(train,seed=123,m=5)#the m is the number of divide
+miceresult
+train <- mice::complete(miceresult,1) #remove the missing values in the train set
+miceresult <- mice::mice(test,seed=123,m=5)
+miceresult
+test <- mice::complete(miceresult,1)#remove the missing values in the test set
+```
+
+```{r}
+train <- train[,-c(1,2)] #delete X, id feature
+train[,-c(1,2,4,5,23)] <- scale(train[,-c(1,2,4,5,23)]) #'Gender','Customer.Type','Type.of.Travel','Class','satisfaction'
+```
+
+```{r}
+train$Gender <- factor(train$Gender)
+train$Customer.Type <- factor(train$Customer.Type)
+train$Type.of.Travel <- factor(train$Type.of.Travel)
+train$Class <- factor(train$Class)
+train$satisfaction <- factor(train$satisfaction)
+
+test$Gender <- factor(test$Gender)
+test$Customer.Type <- factor(test$Customer.Type)
+test$Type.of.Travel <- factor(test$Type.of.Travel)
+test$Class <- factor(test$Class)
+test$satisfaction <- factor(test$satisfaction)
+
+```
+
 ```{r}
 # set x and y 
 x <- train[,-23]
@@ -24,7 +77,7 @@ grid <- expand.grid(
 )
 
 # train catboost
-model <- train(
+mod_cat <- train(
   x = x, 
   y = as.factor(make.names(y)),
   method = catboost.caret,
@@ -36,4 +89,18 @@ model <- train(
   trControl = fit_control
 )
 
+```
+
+```{r}
+print(mod_cat)
+```
+
+```{r}
+coef <- varImp(mod_cat, scale = FALSE)
+pred <- predict(mod_cat, test[,-23]) %>% as.data.frame() %>% rename('predict'='.')
+pred$predict <- gsub("neutral.or.dissatisfied", "neutral or dissatisfied",prediction$predict)
+pred$predict <- factor(pred$predict)
+
+answer <- test[,23] %>% as.data.frame() %>% rename('answer'='.')
+answer$answer <- factor(answer$answer)
 ```

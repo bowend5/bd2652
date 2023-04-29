@@ -9,6 +9,7 @@ language:
 
 rmd_files: [
   'index.Rmd',
+  'EDA.rmd',
   'model1.Rmd',
   'model2.Rmd',
   'model3.Rmd',
