@@ -35,7 +35,9 @@ test <- mice::complete(miceresult,1)#remove the missing values in the test set
 
 ```{r}
 train <- train[,-c(1,2)] #delete X, id feature
-train[,-c(1,2,4,5,23)] <- scale(train[,-c(1,2,4,5,23)]) #'Gender','Customer.Type','Type.of.Travel','Class','satisfaction'
+test=test[,-c(1,2)]
+train[,-c(1,2,4,5,23)] <- scale(train[,-c(1,2,4,5,23)]) # scale the 'Gender','Customer.Type','Type.of.Travel','Class','satisfaction' variables
+test[,-c(1,2,4,5,23)] <- scale(test[,-c(1,2,4,5,23)])
 ```
 
 ```{r}
@@ -98,9 +100,19 @@ print(mod_cat)
 ```{r}
 coef <- varImp(mod_cat, scale = FALSE)
 pred <- predict(mod_cat, test[,-23]) %>% as.data.frame() %>% rename('predict'='.')
-pred$predict <- gsub("neutral.or.dissatisfied", "neutral or dissatisfied",prediction$predict)
+pred$predict <- gsub("neutral.or.dissatisfied", "neutral or dissatisfied",pred$predict)
 pred$predict <- factor(pred$predict)
 
 answer <- test[,23] %>% as.data.frame() %>% rename('answer'='.')
 answer$answer <- factor(answer$answer)
 ```
+```{r}
+catboost_confm <- confusionMatrix(pred$predict, answer$answer,positive = 'satisfied')
+catboost_confm
+```
+
+
+```{r}
+plot(coef)
+```
+

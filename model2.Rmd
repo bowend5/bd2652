@@ -1,20 +1,11 @@
 # [Model 2]
 Random Forest
 ```{r}
+set.seed(5293)
 library(party)
 library(randomForest)
 ```
-```{r}
-train$Gender = as.factor(train$Gender)
-train$Customer.Type  = as.factor(train$Customer.Type  )
-train$Type.of.Travel = as.factor(train$Type.of.Travel)
-train$Class = as.factor(train$Class)
-test$Gender = as.factor(test$Gender)
-test$Customer.Type  = as.factor(test$Customer.Type  )
-test$Type.of.Travel = as.factor(test$Type.of.Travel)
-test$Class = as.factor(test$Class)
 
-```
 
 ```{r}
 mod_rf=randomForest(satisfaction ~ Gender + Customer.Type + Age + Type.of.Travel + 
@@ -23,14 +14,22 @@ mod_rf=randomForest(satisfaction ~ Gender + Customer.Type + Age + Type.of.Travel
     Online.boarding + Seat.comfort + Inflight.entertainment + 
     On.board.service + Leg.room.service + Baggage.handling + 
     Checkin.service + Inflight.service + Cleanliness + Departure.Delay.in.Minutes + 
-    Arrival.Delay.in.Minutes, data=train, controls=cforest_control(mtry=2, mincriterion=0))
+    Arrival.Delay.in.Minutes, data=train_rf, controls=cforest_control(mtry=2, mincriterion=0))
 ```
 
 ```{r}
-pred=predict(mod_rf,test,type='class')
-table(pred,test$satisfaction)
-accuracy=mean(pred==test$satisfaction)
+pred=predict(mod_rf,test_rf,type='class')
+table(pred,test_rf$satisfaction)
+accuracy=mean(pred==test_rf$satisfaction)
 accuracy
 ```
+
+```{r}
+print(mod_rf)
+```
+```{r}
+varImpPlot(mod_rf)
+```
+
 
 

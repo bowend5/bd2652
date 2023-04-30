@@ -81,6 +81,12 @@ summary(mod_logit2)
 ```
 
 ```{r}
+anova(mod_logit1, mod_logit2, test="Chisq")
+#Mod 1 is better
+```
+
+
+```{r}
 pred <- predict(mod_logit2, type = "response", newdata = test)
 confusion_matrix <- table(test$satisfaction, pred>0.7)
 row.names(confusion_matrix)<- c("neutral or dissatisfied", "satisfied")
@@ -88,6 +94,10 @@ noquote("Confusion Matrix")
 confusion_matrix
 accuracy=(confusion_matrix[1]+confusion_matrix[4])/25976
 accuracy
+```
+```{r}
+varImp(mod_logit1, scale = FALSE)
+
 ```
 
 

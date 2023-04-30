@@ -59,6 +59,12 @@ miceresult <- mice::mice(test,seed=123,m=5)
 miceresult
 test <- mice::complete(miceresult,1)#remove the missing values in the test set
 ```
+
+```{r}
+train_rf=train
+test_rf=test
+```
+
 ```{r}
 age1<- ggplot(data = train, aes( x = Age)) + 
   geom_density(fill="lightblue", color="black", alpha=0.8) +
@@ -205,19 +211,6 @@ c5
 #Here we display histogram to demonstrate distribution of character variables. We find that the genders of customers are quite balanced. Majority of the travels are business travels. There are more neutral or dissatisfied reviews than satisfied, but not by a large margin. 
 
 ```
-```{r}
-#Plot the outliers in numercial variables
-train_num<-select_if(train,is.numeric)%>%str(Train)dplyr::select(-id)
-train_num_p<-train_num %>% gather(variable,values,1:18 )
-options(repr.plot.width = 14, repr.plot.height = 8)
-ggplot(train_num_p)+
-  geom_boxplot(aes(x=variable,y=values),fill="cadetblue") + 
-  facet_wrap(~variable,ncol=6,scales="free") + 
-  theme(strip.text.x = element_blank(),
-        text = element_text(size=14))
-
-#We can see that the variables departure.delay.in.minutes, arrival-delay-in-minutes , flight distance, and check-in service have outliers. We will decide if to change them later based on model performance. 
-```
 
 
 
@@ -226,7 +219,7 @@ ggplot(train_num_p)+
 ```{r}
 #Correlation matrix
 df_cor2 <- cor(select_if(subset(train, select=-c(id, Age, Flight.Distance,Departure.Delay.in.Minutes,Arrival.Delay.in.Minutes)), is.numeric))
-summary(ds_cor2)
+summary(df_cor2)
 options(repr.plot.width = 14, repr.plot.height = 8)
 corrplot(df_cor2, na.label=" ", tl.cex=1, tl.col="black", method="color")
 ```
