@@ -14,13 +14,16 @@ mod_rf=randomForest(satisfaction ~ Gender + Customer.Type + Age + Type.of.Travel
     Online.boarding + Seat.comfort + Inflight.entertainment + 
     On.board.service + Leg.room.service + Baggage.handling + 
     Checkin.service + Inflight.service + Cleanliness + Departure.Delay.in.Minutes + 
-    Arrival.Delay.in.Minutes, data=train_rf, controls=cforest_control(mtry=2, mincriterion=0))
+    Arrival.Delay.in.Minutes, data=train, controls=cforest_control(mtry=2, mincriterion=0))
+```
+```{r}
+test <- rbind(train[1, ] , test)
+test <- test[-1,]
 ```
 
 ```{r}
-pred=predict(mod_rf,test_rf,type='class')
-table(pred,test_rf$satisfaction)
-accuracy=mean(pred==test_rf$satisfaction)
+pred=predict(mod_rf,test,type='class')
+accuracy=mean(pred==test$satisfaction)
 accuracy
 ```
 

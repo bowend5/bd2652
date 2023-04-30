@@ -60,10 +60,6 @@ miceresult
 test <- mice::complete(miceresult,1)#remove the missing values in the test set
 ```
 
-```{r}
-train_rf=train
-test_rf=test
-```
 
 ```{r}
 age1<- ggplot(data = train, aes( x = Age)) + 

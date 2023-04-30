@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 2 [Model 1] | Final project proposal</title>
-  <meta name="description" content="Chapter 2 [Model 1] | Final project proposal" />
+  <title>Chapter 2 [Model 1] | EDA</title>
+  <meta name="description" content="Chapter 2 [Model 1] | EDA" />
   <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 2 [Model 1] | Final project proposal" />
+  <meta property="og:title" content="Chapter 2 [Model 1] | EDA" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 2 [Model 1] | Final project proposal" />
+  <meta name="twitter:title" content="Chapter 2 [Model 1] | EDA" />
   
   
   
@@ -23,7 +23,7 @@
 <meta name="author" content="Bowen Dong" />
 
 
-<meta name="date" content="2023-03-23" />
+<meta name="date" content="2023-04-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -54,6 +54,70 @@
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -93,7 +157,7 @@
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Final project proposal</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">EDA</a>
           </h1>
         </div>
 
@@ -103,6 +167,478 @@
             <section class="normal" id="section-">
 <div id="model-1" class="section level1 hasAnchor" number="2">
 <h1><span class="header-section-number">Chapter 2</span> [Model 1]<a href="model-1.html#model-1" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>At first, we approach with a logistic regression.</p>
+<pre><code>## 
+## Call:
+## glm(formula = satisfaction ~ Gender + Customer.Type + Age + Type.of.Travel + 
+##     Class + Flight.Distance + Inflight.wifi.service + Departure.Arrival.time.convenient + 
+##     Ease.of.Online.booking + Gate.location + Food.and.drink + 
+##     Online.boarding + Seat.comfort + Inflight.entertainment + 
+##     On.board.service + Leg.room.service + Baggage.handling + 
+##     Checkin.service + Inflight.service + Cleanliness + Departure.Delay.in.Minutes + 
+##     Arrival.Delay.in.Minutes, family = &quot;binomial&quot;, data = train)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -4.6972  -0.2131  -0.0471   0.1327   4.4043  
+## 
+## Coefficients: (3 not defined because of singularities)
+##                                          Estimate     Std. Error z value
+## (Intercept)                           6.135684046 9960.683349089   0.001
+## GenderMale                            0.046674048    0.027299944   1.710
+## Customer.TypeLoyal Customer           3.354412385    0.049529996  67.725
+## Age                                  -0.002302051    0.001016757  -2.264
+## Type.of.TravelPersonal Travel        -4.272223814    0.055068693 -77.580
+## ClassEco                             -0.629139698    0.037201422 -16.912
+## ClassEco Plus                        -0.836478230    0.060482300 -13.830
+## Flight.Distance                       0.000007093    0.000015351   0.462
+## Inflight.wifi.service1              -24.017165536   88.677279730  -0.271
+## Inflight.wifi.service2              -24.275068600   88.677292020  -0.274
+## Inflight.wifi.service3              -24.320269795   88.677293770  -0.274
+## Inflight.wifi.service4              -22.767339373   88.677288662  -0.257
+## Inflight.wifi.service5              -17.196794646   88.677325152  -0.194
+## Departure.Arrival.time.convenient1    0.314709795    0.092960974   3.385
+## Departure.Arrival.time.convenient2    0.430883468    0.089584811   4.810
+## Departure.Arrival.time.convenient3    0.242521124    0.086314568   2.810
+## Departure.Arrival.time.convenient4   -0.677426528    0.077328642  -8.760
+## Departure.Arrival.time.convenient5   -0.913237363    0.084915722 -10.755
+## Ease.of.Online.booking1               3.065614462    0.914246797   3.353
+## Ease.of.Online.booking2               2.997529058    0.914264099   3.279
+## Ease.of.Online.booking3               3.498870179    0.914029681   3.828
+## Ease.of.Online.booking4               4.343577974    0.913828483   4.753
+## Ease.of.Online.booking5               3.712920774    0.914169494   4.062
+## Gate.location1                      -18.759198354 6522.620933600  -0.003
+## Gate.location2                      -18.677445233 6522.620933583  -0.003
+## Gate.location3                      -18.846425727 6522.620933552  -0.003
+## Gate.location4                      -19.103713881 6522.620933551  -0.003
+## Gate.location5                      -19.306077451 6522.620933478  -0.003
+## Food.and.drink1                      -0.318703410    1.747068807  -0.182
+## Food.and.drink2                      -0.036518730    1.746840887  -0.021
+## Food.and.drink3                      -0.166491504    1.746513996  -0.095
+## Food.and.drink4                      -0.121153446    1.746850314  -0.069
+## Food.and.drink5                      -0.275345357    1.746914587  -0.158
+## Online.boarding1                     -3.624126891    0.917866903  -3.948
+## Online.boarding2                     -3.544200536    0.917762961  -3.862
+## Online.boarding3                     -3.775757099    0.917476378  -4.115
+## Online.boarding4                     -2.129799536    0.917120945  -2.322
+## Online.boarding5                     -0.881219467    0.917367671  -0.961
+## Seat.comfort1                        20.482736875 6522.652305868   0.003
+## Seat.comfort2                        19.956707588 6522.652305794   0.003
+## Seat.comfort3                        18.901624829 6522.652305707   0.003
+## Seat.comfort4                        19.603927021 6522.652305598   0.003
+## Seat.comfort5                        20.444045608 6522.652305620   0.003
+## Inflight.entertainment1              39.690512540 1515.563281496   0.026
+## Inflight.entertainment2              40.446220908 1515.563281279   0.027
+## Inflight.entertainment3              41.278331824 1515.563280338   0.027
+## Inflight.entertainment4              40.950371390 1515.563280458   0.027
+## Inflight.entertainment5              40.187058290 1515.563280555   0.027
+## On.board.service1                   -23.341149972 4051.505786020  -0.006
+## On.board.service2                   -23.190548358 4051.505785708  -0.006
+## On.board.service3                   -22.658893416 4051.505785537  -0.006
+## On.board.service4                   -22.575724680 4051.505785515  -0.006
+## On.board.service5                   -22.042673127 4051.505785766  -0.005
+## Leg.room.service1                    -2.399951977    0.958312048  -2.504
+## Leg.room.service2                    -2.126295599    0.957812306  -2.220
+## Leg.room.service3                    -2.243219830    0.957634746  -2.342
+## Leg.room.service4                    -1.544749561    0.957774152  -1.613
+## Leg.room.service5                    -1.383053603    0.957527708  -1.444
+## Baggage.handling2                    -0.220072662    0.076002110  -2.896
+## Baggage.handling3                    -0.842671321    0.070980194 -11.872
+## Baggage.handling4                    -0.245187207    0.069004577  -3.553
+## Baggage.handling5                     0.515886931    0.073357413   7.033
+## Checkin.service1                     -1.425739312    0.054285840 -26.264
+## Checkin.service2                     -1.234926554    0.054011546 -22.864
+## Checkin.service3                     -0.725524525    0.043456292 -16.696
+## Checkin.service4                     -0.744961732    0.043237755 -17.229
+## Checkin.service5                               NA             NA      NA
+## Inflight.service1                    -0.482379345    0.076432908  -6.311
+## Inflight.service2                    -0.702026114    0.069323343 -10.127
+## Inflight.service3                    -1.395325704    0.057284504 -24.358
+## Inflight.service4                    -0.694981930    0.044931927 -15.467
+## Inflight.service5                              NA             NA      NA
+## Cleanliness1                         -0.997645462    0.075115410 -13.282
+## Cleanliness2                         -0.954918574    0.073034724 -13.075
+## Cleanliness3                         -0.467451098    0.061438659  -7.608
+## Cleanliness4                         -0.601976126    0.060208910  -9.998
+## Cleanliness5                                   NA             NA      NA
+## Departure.Delay.in.Minutes            0.004650470    0.001317806   3.529
+## Arrival.Delay.in.Minutes             -0.008457734    0.001297858  -6.517
+##                                                Pr(&gt;|z|)    
+## (Intercept)                                    0.999509    
+## GenderMale                                     0.087326 .  
+## Customer.TypeLoyal Customer        &lt; 0.0000000000000002 ***
+## Age                                            0.023567 *  
+## Type.of.TravelPersonal Travel      &lt; 0.0000000000000002 ***
+## ClassEco                           &lt; 0.0000000000000002 ***
+## ClassEco Plus                      &lt; 0.0000000000000002 ***
+## Flight.Distance                                0.644060    
+## Inflight.wifi.service1                         0.786516    
+## Inflight.wifi.service2                         0.784280    
+## Inflight.wifi.service3                         0.783888    
+## Inflight.wifi.service4                         0.797377    
+## Inflight.wifi.service5                         0.846234    
+## Departure.Arrival.time.convenient1             0.000711 ***
+## Departure.Arrival.time.convenient2   0.0000015109452089 ***
+## Departure.Arrival.time.convenient3             0.004958 ** 
+## Departure.Arrival.time.convenient4 &lt; 0.0000000000000002 ***
+## Departure.Arrival.time.convenient5 &lt; 0.0000000000000002 ***
+## Ease.of.Online.booking1                        0.000799 ***
+## Ease.of.Online.booking2                        0.001043 ** 
+## Ease.of.Online.booking3                        0.000129 ***
+## Ease.of.Online.booking4              0.0000020025633906 ***
+## Ease.of.Online.booking5              0.0000487535341744 ***
+## Gate.location1                                 0.997705    
+## Gate.location2                                 0.997715    
+## Gate.location3                                 0.997695    
+## Gate.location4                                 0.997663    
+## Gate.location5                                 0.997638    
+## Food.and.drink1                                0.855252    
+## Food.and.drink2                                0.983321    
+## Food.and.drink3                                0.924054    
+## Food.and.drink4                                0.944707    
+## Food.and.drink5                                0.874758    
+## Online.boarding1                     0.0000786676754734 ***
+## Online.boarding2                               0.000113 ***
+## Online.boarding3                     0.0000386554550804 ***
+## Online.boarding4                               0.020219 *  
+## Online.boarding5                               0.336755    
+## Seat.comfort1                                  0.997494    
+## Seat.comfort2                                  0.997559    
+## Seat.comfort3                                  0.997688    
+## Seat.comfort4                                  0.997602    
+## Seat.comfort5                                  0.997499    
+## Inflight.entertainment1                        0.979107    
+## Inflight.entertainment2                        0.978709    
+## Inflight.entertainment3                        0.978271    
+## Inflight.entertainment4                        0.978444    
+## Inflight.entertainment5                        0.978846    
+## On.board.service1                              0.995403    
+## On.board.service2                              0.995433    
+## On.board.service3                              0.995538    
+## On.board.service4                              0.995554    
+## On.board.service5                              0.995659    
+## Leg.room.service1                              0.012268 *  
+## Leg.room.service2                              0.026422 *  
+## Leg.room.service3                              0.019157 *  
+## Leg.room.service4                              0.106776    
+## Leg.room.service5                              0.148626    
+## Baggage.handling2                              0.003784 ** 
+## Baggage.handling3                  &lt; 0.0000000000000002 ***
+## Baggage.handling4                              0.000381 ***
+## Baggage.handling5                    0.0000000000020285 ***
+## Checkin.service1                   &lt; 0.0000000000000002 ***
+## Checkin.service2                   &lt; 0.0000000000000002 ***
+## Checkin.service3                   &lt; 0.0000000000000002 ***
+## Checkin.service4                   &lt; 0.0000000000000002 ***
+## Checkin.service5                                     NA    
+## Inflight.service1                    0.0000000002769744 ***
+## Inflight.service2                  &lt; 0.0000000000000002 ***
+## Inflight.service3                  &lt; 0.0000000000000002 ***
+## Inflight.service4                  &lt; 0.0000000000000002 ***
+## Inflight.service5                                    NA    
+## Cleanliness1                       &lt; 0.0000000000000002 ***
+## Cleanliness2                       &lt; 0.0000000000000002 ***
+## Cleanliness3                         0.0000000000000277 ***
+## Cleanliness4                       &lt; 0.0000000000000002 ***
+## Cleanliness5                                         NA    
+## Departure.Delay.in.Minutes                     0.000417 ***
+## Arrival.Delay.in.Minutes             0.0000000000718776 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 142189  on 103903  degrees of freedom
+## Residual deviance:  37007  on 103828  degrees of freedom
+## AIC: 37159
+## 
+## Number of Fisher Scoring iterations: 17</code></pre>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<pre><code>## 
+## Call:
+## glm(formula = satisfaction ~ Gender + Customer.Type + Age + Type.of.Travel + 
+##     Class + Flight.Distance + Inflight.wifi.service + Departure.Arrival.time.convenient + 
+##     Ease.of.Online.booking + Gate.location + Food.and.drink + 
+##     Online.boarding + Seat.comfort + Inflight.entertainment + 
+##     On.board.service + Leg.room.service + Baggage.handling + 
+##     Checkin.service + Inflight.service + Cleanliness + Departure.Delay.in.Minutes, 
+##     family = &quot;binomial&quot;, data = train)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -4.6918  -0.2136  -0.0472   0.1334   4.4065  
+## 
+## Coefficients: (3 not defined because of singularities)
+##                                          Estimate     Std. Error z value
+## (Intercept)                           5.847330023 9960.659588482   0.001
+## GenderMale                            0.047448164    0.027282248   1.739
+## Customer.TypeLoyal Customer           3.350169347    0.049504694  67.674
+## Age                                  -0.002207582    0.001015895  -2.173
+## Type.of.TravelPersonal Travel        -4.267537927    0.055039597 -77.536
+## ClassEco                             -0.631172852    0.037179145 -16.977
+## ClassEco Plus                        -0.841199608    0.060475073 -13.910
+## Flight.Distance                       0.000007312    0.000015336   0.477
+## Inflight.wifi.service1              -24.032270974   88.714027509  -0.271
+## Inflight.wifi.service2              -24.289121711   88.714039603  -0.274
+## Inflight.wifi.service3              -24.332874676   88.714041255  -0.274
+## Inflight.wifi.service4              -22.781888997   88.714036300  -0.257
+## Inflight.wifi.service5              -17.212861664   88.714072590  -0.194
+## Departure.Arrival.time.convenient1    0.314462404    0.092948622   3.383
+## Departure.Arrival.time.convenient2    0.430414832    0.089559164   4.806
+## Departure.Arrival.time.convenient3    0.243301636    0.086289961   2.820
+## Departure.Arrival.time.convenient4   -0.676533506    0.077305304  -8.751
+## Departure.Arrival.time.convenient5   -0.911623996    0.084895146 -10.738
+## Ease.of.Online.booking1               3.054638109    0.908891050   3.361
+## Ease.of.Online.booking2               2.987443939    0.908899782   3.287
+## Ease.of.Online.booking3               3.488639602    0.908667149   3.839
+## Ease.of.Online.booking4               4.334885644    0.908466528   4.772
+## Ease.of.Online.booking5               3.706757065    0.908795214   4.079
+## Gate.location1                      -18.761635322 6522.636339770  -0.003
+## Gate.location2                      -18.678886544 6522.636339752  -0.003
+## Gate.location3                      -18.850292026 6522.636339721  -0.003
+## Gate.location4                      -19.109073839 6522.636339721  -0.003
+## Gate.location5                      -19.312758348 6522.636339647  -0.003
+## Food.and.drink1                      -0.309280065    1.698628857  -0.182
+## Food.and.drink2                      -0.028272604    1.698380471  -0.017
+## Food.and.drink3                      -0.154129806    1.698044279  -0.091
+## Food.and.drink4                      -0.111659588    1.698376307  -0.066
+## Food.and.drink5                      -0.258998729    1.698427718  -0.152
+## Online.boarding1                     -3.616683956    0.912518240  -3.963
+## Online.boarding2                     -3.536022078    0.912420951  -3.875
+## Online.boarding3                     -3.766471777    0.912136456  -4.129
+## Online.boarding4                     -2.119175236    0.911778938  -2.324
+## Online.boarding5                     -0.874469710    0.912013545  -0.959
+## Seat.comfort1                        20.776237890 6522.624216116   0.003
+## Seat.comfort2                        20.247187063 6522.624216045   0.003
+## Seat.comfort3                        19.193794110 6522.624215954   0.003
+## Seat.comfort4                        19.896168573 6522.624215846   0.003
+## Seat.comfort5                        20.733218106 6522.624215873   0.003
+## Inflight.entertainment1              39.669642691 1514.727004234   0.026
+## Inflight.entertainment2              40.425024116 1514.727004057   0.027
+## Inflight.entertainment3              41.254076570 1514.727003112   0.027
+## Inflight.entertainment4              40.927806902 1514.727003229   0.027
+## Inflight.entertainment5              40.162285593 1514.727003285   0.027
+## On.board.service1                   -23.319854137 4051.154242594  -0.006
+## On.board.service2                   -23.171581327 4051.154242294  -0.006
+## On.board.service3                   -22.636570388 4051.154242103  -0.006
+## On.board.service4                   -22.553781868 4051.154242080  -0.006
+## On.board.service5                   -22.022037590 4051.154242317  -0.005
+## Leg.room.service1                    -2.400549338    0.953234442  -2.518
+## Leg.room.service2                    -2.124015812    0.952716808  -2.229
+## Leg.room.service3                    -2.246118567    0.952537587  -2.358
+## Leg.room.service4                    -1.548438824    0.952684786  -1.625
+## Leg.room.service5                    -1.383492128    0.952433142  -1.453
+## Baggage.handling2                    -0.221428673    0.075951686  -2.915
+## Baggage.handling3                    -0.844429984    0.070911882 -11.908
+## Baggage.handling4                    -0.248684118    0.068935370  -3.607
+## Baggage.handling5                     0.511016823    0.073303862   6.971
+## Checkin.service1                     -1.421856080    0.054247871 -26.210
+## Checkin.service2                     -1.235812807    0.053973155 -22.897
+## Checkin.service3                     -0.723163502    0.043424594 -16.653
+## Checkin.service4                     -0.745489367    0.043211592 -17.252
+## Checkin.service5                               NA             NA      NA
+## Inflight.service1                    -0.491473821    0.076360309  -6.436
+## Inflight.service2                    -0.709770247    0.069244593 -10.250
+## Inflight.service3                    -1.401000832    0.057248422 -24.472
+## Inflight.service4                    -0.694799665    0.044921417 -15.467
+## Inflight.service5                              NA             NA      NA
+## Cleanliness1                         -0.995066986    0.075076259 -13.254
+## Cleanliness2                         -0.950013877    0.072969397 -13.019
+## Cleanliness3                         -0.464081567    0.061361548  -7.563
+## Cleanliness4                         -0.599210283    0.060123925  -9.966
+## Cleanliness5                                   NA             NA      NA
+## Departure.Delay.in.Minutes           -0.003660068    0.000340658 -10.744
+##                                                Pr(&gt;|z|)    
+## (Intercept)                                    0.999532    
+## GenderMale                                     0.082007 .  
+## Customer.TypeLoyal Customer        &lt; 0.0000000000000002 ***
+## Age                                            0.029777 *  
+## Type.of.TravelPersonal Travel      &lt; 0.0000000000000002 ***
+## ClassEco                           &lt; 0.0000000000000002 ***
+## ClassEco Plus                      &lt; 0.0000000000000002 ***
+## Flight.Distance                                0.633534    
+## Inflight.wifi.service1                         0.786471    
+## Inflight.wifi.service2                         0.784245    
+## Inflight.wifi.service3                         0.783866    
+## Inflight.wifi.service4                         0.797332    
+## Inflight.wifi.service5                         0.846155    
+## Departure.Arrival.time.convenient1             0.000717 ***
+## Departure.Arrival.time.convenient2   0.0000015403585053 ***
+## Departure.Arrival.time.convenient3             0.004809 ** 
+## Departure.Arrival.time.convenient4 &lt; 0.0000000000000002 ***
+## Departure.Arrival.time.convenient5 &lt; 0.0000000000000002 ***
+## Ease.of.Online.booking1                        0.000777 ***
+## Ease.of.Online.booking2                        0.001013 ** 
+## Ease.of.Online.booking3                        0.000123 ***
+## Ease.of.Online.booking4              0.0000018272148961 ***
+## Ease.of.Online.booking5              0.0000452766549778 ***
+## Gate.location1                                 0.997705    
+## Gate.location2                                 0.997715    
+## Gate.location3                                 0.997694    
+## Gate.location4                                 0.997662    
+## Gate.location5                                 0.997638    
+## Food.and.drink1                                0.855523    
+## Food.and.drink2                                0.986718    
+## Food.and.drink3                                0.927676    
+## Food.and.drink4                                0.947581    
+## Food.and.drink5                                0.878798    
+## Online.boarding1                     0.0000738867135719 ***
+## Online.boarding2                               0.000106 ***
+## Online.boarding3                     0.0000363892423083 ***
+## Online.boarding4                               0.020114 *  
+## Online.boarding5                               0.337642    
+## Seat.comfort1                                  0.997459    
+## Seat.comfort2                                  0.997523    
+## Seat.comfort3                                  0.997652    
+## Seat.comfort4                                  0.997566    
+## Seat.comfort5                                  0.997464    
+## Inflight.entertainment1                        0.979106    
+## Inflight.entertainment2                        0.978709    
+## Inflight.entertainment3                        0.978272    
+## Inflight.entertainment4                        0.978444    
+## Inflight.entertainment5                        0.978847    
+## On.board.service1                              0.995407    
+## On.board.service2                              0.995436    
+## On.board.service3                              0.995542    
+## On.board.service4                              0.995558    
+## On.board.service5                              0.995663    
+## Leg.room.service1                              0.011792 *  
+## Leg.room.service2                              0.025785 *  
+## Leg.room.service3                              0.018372 *  
+## Leg.room.service4                              0.104090    
+## Leg.room.service5                              0.146338    
+## Baggage.handling2                              0.003552 ** 
+## Baggage.handling3                  &lt; 0.0000000000000002 ***
+## Baggage.handling4                              0.000309 ***
+## Baggage.handling5                    0.0000000000031422 ***
+## Checkin.service1                   &lt; 0.0000000000000002 ***
+## Checkin.service2                   &lt; 0.0000000000000002 ***
+## Checkin.service3                   &lt; 0.0000000000000002 ***
+## Checkin.service4                   &lt; 0.0000000000000002 ***
+## Checkin.service5                                     NA    
+## Inflight.service1                    0.0000000001224636 ***
+## Inflight.service2                  &lt; 0.0000000000000002 ***
+## Inflight.service3                  &lt; 0.0000000000000002 ***
+## Inflight.service4                  &lt; 0.0000000000000002 ***
+## Inflight.service5                                    NA    
+## Cleanliness1                       &lt; 0.0000000000000002 ***
+## Cleanliness2                       &lt; 0.0000000000000002 ***
+## Cleanliness3                         0.0000000000000394 ***
+## Cleanliness4                       &lt; 0.0000000000000002 ***
+## Cleanliness5                                         NA    
+## Departure.Delay.in.Minutes         &lt; 0.0000000000000002 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 142189  on 103903  degrees of freedom
+## Residual deviance:  37050  on 103829  degrees of freedom
+## AIC: 37200
+## 
+## Number of Fisher Scoring iterations: 17</code></pre>
+<pre><code>## Analysis of Deviance Table
+## 
+## Model 1: satisfaction ~ Gender + Customer.Type + Age + Type.of.Travel + 
+##     Class + Flight.Distance + Inflight.wifi.service + Departure.Arrival.time.convenient + 
+##     Ease.of.Online.booking + Gate.location + Food.and.drink + 
+##     Online.boarding + Seat.comfort + Inflight.entertainment + 
+##     On.board.service + Leg.room.service + Baggage.handling + 
+##     Checkin.service + Inflight.service + Cleanliness + Departure.Delay.in.Minutes + 
+##     Arrival.Delay.in.Minutes
+## Model 2: satisfaction ~ Gender + Customer.Type + Age + Type.of.Travel + 
+##     Class + Flight.Distance + Inflight.wifi.service + Departure.Arrival.time.convenient + 
+##     Ease.of.Online.booking + Gate.location + Food.and.drink + 
+##     Online.boarding + Seat.comfort + Inflight.entertainment + 
+##     On.board.service + Leg.room.service + Baggage.handling + 
+##     Checkin.service + Inflight.service + Cleanliness + Departure.Delay.in.Minutes
+##   Resid. Df Resid. Dev Df Deviance         Pr(&gt;Chi)    
+## 1    103828      37007                                 
+## 2    103829      37050 -1   -43.44 0.00000000004371 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre><code>## [1] Confusion Matrix</code></pre>
+<pre><code>##                          
+##                           FALSE  TRUE
+##   neutral or dissatisfied 14163   410
+##   satisfied                1543  9860</code></pre>
+<pre><code>## [1] 0.9248152</code></pre>
+<pre><code>##                                         Overall
+## GenderMale                          1.709675568
+## Customer.TypeLoyal Customer        67.724866208
+## Age                                 2.264111314
+## Type.of.TravelPersonal Travel      77.579902001
+## ClassEco                           16.911710908
+## ClassEco Plus                      13.830132589
+## Flight.Distance                     0.462029416
+## Inflight.wifi.service1              0.270837870
+## Inflight.wifi.service2              0.273746165
+## Inflight.wifi.service3              0.274255886
+## Inflight.wifi.service4              0.256743747
+## Inflight.wifi.service5              0.193925500
+## Departure.Arrival.time.convenient1  3.385396932
+## Departure.Arrival.time.convenient2  4.809782623
+## Departure.Arrival.time.convenient3  2.809735715
+## Departure.Arrival.time.convenient4  8.760357255
+## Departure.Arrival.time.convenient5 10.754632312
+## Ease.of.Online.booking1             3.353158547
+## Ease.of.Online.booking2             3.278624918
+## Ease.of.Online.booking3             3.827961225
+## Ease.of.Online.booking4             4.753165453
+## Ease.of.Online.booking5             4.061523382
+## Gate.location1                      0.002876022
+## Gate.location2                      0.002863488
+## Gate.location3                      0.002889395
+## Gate.location4                      0.002928840
+## Gate.location5                      0.002959865
+## Food.and.drink1                     0.182421785
+## Food.and.drink2                     0.020905584
+## Food.and.drink3                     0.095327896
+## Food.and.drink4                     0.069355368
+## Food.and.drink5                     0.157618099
+## Online.boarding1                    3.948423107
+## Online.boarding2                    3.861782059
+## Online.boarding3                    4.115372547
+## Online.boarding4                    2.322266816
+## Online.boarding5                    0.960595729
+## Seat.comfort1                       0.003140247
+## Seat.comfort2                       0.003059600
+## Seat.comfort3                       0.002897843
+## Seat.comfort4                       0.003005515
+## Seat.comfort5                       0.003134315
+## Inflight.entertainment1             0.026188621
+## Inflight.entertainment2             0.026687253
+## Inflight.entertainment3             0.027236297
+## Inflight.entertainment4             0.027019902
+## Inflight.entertainment5             0.026516252
+## On.board.service1                   0.005761105
+## On.board.service2                   0.005723933
+## On.board.service3                   0.005592709
+## On.board.service4                   0.005572181
+## On.board.service5                   0.005440613
+## Leg.room.service1                   2.504353339
+## Leg.room.service2                   2.219950177
+## Leg.room.service3                   2.342458687
+## Leg.room.service4                   1.612853675
+## Leg.room.service5                   1.444400607
+## Baggage.handling2                   2.895612517
+## Baggage.handling3                  11.871921858
+## Baggage.handling4                   3.553202073
+## Baggage.handling5                   7.032512571
+## Checkin.service1                   26.263557857
+## Checkin.service2                   22.864121654
+## Checkin.service3                   16.695500073
+## Checkin.service4                   17.229426899
+## Inflight.service1                   6.311147316
+## Inflight.service2                  10.126835819
+## Inflight.service3                  24.357821354
+## Inflight.service4                  15.467440898
+## Cleanliness1                       13.281501871
+## Cleanliness2                       13.074857044
+## Cleanliness3                        7.608419659
+## Cleanliness4                        9.998123564
+## Departure.Delay.in.Minutes          3.528948921
+## Arrival.Delay.in.Minutes            6.516686100</code></pre>
 
 </div>
             </section>
