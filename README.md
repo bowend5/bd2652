@@ -1,64 +1,54 @@
-This is a template for the IMLV final project. It is based on the template created with *File, New Project..., New Directory, Book Project using bookdown* in RStudio. 
+  This project uses data from an airline passenger survey. Our goal is to investigate what factors lead to passenger satisfaction. In this project we used Logistic regression, random forest and catboost. This is a classification problem. The coding is completed all in R. 
+  Dataset: 
+  Gender: Gender of the passengers (Female, Male)
+
+Customer Type: The customer type (Loyal customer, disloyal customer)
+
+Age: The actual age of the passengers
+
+Type of Travel: Purpose of the flight of the passengers (Personal Travel, Business Travel)
+
+Class: Travel class in the plane of the passengers (Business, Eco, Eco Plus)
+
+Flight distance: The flight distance of this journey
+
+Inflight wifi service: Satisfaction level of the inflight wifi service (0:Not Applicable;1-5)
+
+Departure/Arrival time convenient: Satisfaction level of Departure/Arrival time convenient
+
+Ease of Online booking: Satisfaction level of online booking
+
+Gate location: Satisfaction level of Gate location
+
+Food and drink: Satisfaction level of Food and drink
+
+Online boarding: Satisfaction level of online boarding
+
+Seat comfort: Satisfaction level of Seat comfort
+
+Inflight entertainment: Satisfaction level of inflight entertainment
+
+On-board service: Satisfaction level of On-board service
+
+Leg room service: Satisfaction level of Leg room service
+
+Baggage handling: Satisfaction level of baggage handling
+
+Check-in service: Satisfaction level of Check-in service
+
+Inflight service: Satisfaction level of inflight service
+
+Cleanliness: Satisfaction level of Cleanliness
+
+Departure Delay in Minutes: Minutes delayed when departure
+
+Arrival Delay in Minutes: Minutes delayed when Arrival
+
+Satisfaction: Airline satisfaction level(Satisfaction, neutral or dissatisfaction)
 
 
-## ABSOLUTE ESSENTIALS
 
-*If you have any difficulties or have feedback of any kind, please file an issue or communicate through [Discussions](https://github.com/jtr13/IMLVtemplate/discussions).*
-
-### Copy this template
-
-- [ ] 1. Click the green "Use this template" button above.  DO NOT FORK THE REPO. Choose a descriptive name for your repo, such as "federalbudget" or "AIDSdeaths".  (If you change your mind before you do any work, delete your new repo and start over.)
-
-- [ ] 2. In the Description field, write: "Bookdown source files for IMLV final project".
-
-### Set up GitHub Pages	
-- [ ] 1. On the home page of your repo, click Settings. Click the "Pages" section on the left. In the **Build and Deployment** section, set **Source** to "Deploy from a branch" (Classic Pages experience) and **Branch** to **main** with **/docs** folder. Click Save. Above the **Build and Deployment** section, a box will appear with your book's URL. Copy the URL. (Note that sometimes there is a delay until your book actually appears at that URL. If it doesn't appear after a few minutes, make a change and commit it to trigger a GitHub Pages build.)	
-
-- [ ] 2. Click the gear button near "About" on the home page of the repo and paste your book URL into the **Website** field that appears on the right.
-
-### Clone the repo
-
-- [ ] 1. Clone your new repo with *File, New Project..., Version Control, Git* in RStudio.
-
-### Edit some key files
-
-- [ ] 1. In `index.Rmd`, change YOUR TITLE HERE to your title.
-
-- [ ] 2. In `index.Rmd`, change YOUR NAMES HERE to your names.
-
-- [ ] 3. In `_bookdown.yml`, change YOUR GITHUB USERNAME to your GitHub username in the two places it appears.
-
-- [ ] 4. In `_bookdown.yml`, change YOUR GITHUB REPO to your GitHub repo name in the two places it appears.
-
-(Note that 3. and 4. provide links to the `.Rmd` files of your project for editing and viewing. If you move your `.Rmd` files you will need to update these file paths. Once your book is rendered, test that the edit (pen) and view (eye) buttons work.)
-
-- [ ] 5. In `_output.yml`, change YOUR SHORT TITLE to a shortened version of your title. (Leave the "after:" line indicating that the book was published with bookdown as is.)
-
-### Render the book
-
-- [ ] 1. Install **bookdown** with `install.packages("bookdown")`. If you already have it, update to the most recent version.
-
-- [ ] 2. Render locally with `bookdown::render_book("index.Rmd")` or clicking the *Build book* button which should appear in the Build tab (in the same pane as Environment, History, Connections, ...).
-
-- [ ] 3. Use `browseURL("docs/index.html")` to view your book locally (or just open `index.html` in a browser).
-
-- [ ] 4. If it looks good, commit and push all changed files to GitHub. 
-
-(You will need to repeat steps 2 and 4 every time you wish to update the book online.)
-
-### Edit README	
-
-Once you've completed these steps, delete the content of this **README** and add a short description of your project with a link to the book URL. It would be appreciated if you add the following to the end:	
-
-*This repo was initially generated from a bookdown template available here: https://github.com/jtr13/IMLVtemplate.*	
-
-### Demo Video	
-
-A demo video showing how to create a **bookdown book** following these similar instructions: http://bit.ly/fiveminutebookdown Note that this video uses a different template.
-
-### Additional features	
-
-Please consult the official guide to **bookdown**: https://bookdown.org/yihui/bookdown
+  This repo was initially generated from a bookdown template available here: https://github.com/jtr13/IMLVtemplate.
 
 
 
