@@ -1,0 +1,8 @@
+proposal
+the-data
+modeling-goal
+the-models-we-intend-to-use
+model-1
+model-2
+model-3
+reflections
