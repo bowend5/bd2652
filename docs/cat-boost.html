@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Final project: Airline Passenger Satisfaction Classification</title>
-  <meta name="description" content="Final project: Airline Passenger Satisfaction Classification" />
+  <title>Chapter 4 Cat Boost | Final project: Airline Passenger Satisfaction Classification</title>
+  <meta name="description" content="Chapter 4 Cat Boost | Final project: Airline Passenger Satisfaction Classification" />
   <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Final project: Airline Passenger Satisfaction Classification" />
+  <meta property="og:title" content="Chapter 4 Cat Boost | Final project: Airline Passenger Satisfaction Classification" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Final project: Airline Passenger Satisfaction Classification" />
+  <meta name="twitter:title" content="Chapter 4 Cat Boost | Final project: Airline Passenger Satisfaction Classification" />
   
   
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-<link rel="next" href="logistic-regression.html"/>
+<link rel="prev" href="random-forest.html"/>
+<link rel="next" href="reflections.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -102,53 +102,10 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Final project: Airline Passenger Satisfaction Classification</h1>
-<p class="author"><em>Bowen Dong</em></p>
-<p class="date"><em>2023-05-09</em></p>
-</div>
-<div id="proposal" class="section level1 hasAnchor" number="1">
-<h1><span class="header-section-number">Chapter 1</span> Proposal<a href="index.html#proposal" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div id="the-data" class="section level2 hasAnchor" number="1.1">
-<h2><span class="header-section-number">1.1</span> The data:<a href="index.html#the-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Airline Passenger Satisfaction from kaggle
-<a href="https://www.kaggle.com/datasets/teejmahal20/airline-passenger-satisfaction" class="uri">https://www.kaggle.com/datasets/teejmahal20/airline-passenger-satisfaction</a></p>
-<p>Variables:
-Gender: Gender of the passengers (Female, Male)</p>
-<p>Customer Type: The customer type (Loyal customer, disloyal customer)</p>
-<p>Age: The actual age of the passengers</p>
-<p>Type of Travel: Purpose of the flight of the passengers (Personal Travel, Business Travel)</p>
-<p>Class: Travel class in the plane of the passengers (Business, Eco, Eco Plus)</p>
-<p>Flight distance: The flight distance of this journey</p>
-<p>Inflight wifi service: Satisfaction level of the inflight wifi service (0:Not Applicable;1-5)</p>
-<p>Departure/Arrival time convenient: Satisfaction level of Departure/Arrival time convenient</p>
-<p>Ease of Online booking: Satisfaction level of online booking</p>
-<p>Gate location: Satisfaction level of Gate location</p>
-<p>Food and drink: Satisfaction level of Food and drink</p>
-<p>Online boarding: Satisfaction level of online boarding</p>
-<p>Seat comfort: Satisfaction level of Seat comfort</p>
-<p>Inflight entertainment: Satisfaction level of inflight entertainment</p>
-<p>On-board service: Satisfaction level of On-board service</p>
-<p>Leg room service: Satisfaction level of Leg room service</p>
-<p>Baggage handling: Satisfaction level of baggage handling</p>
-<p>Check-in service: Satisfaction level of Check-in service</p>
-<p>Inflight service: Satisfaction level of inflight service</p>
-<p>Cleanliness: Satisfaction level of Cleanliness</p>
-<p>Departure Delay in Minutes: Minutes delayed when departure</p>
-<p>Arrival Delay in Minutes: Minutes delayed when Arrival</p>
-<p>Satisfaction: Airline satisfaction level(Satisfaction, neutral or dissatisfaction)</p>
-</div>
-<div id="modeling-goal" class="section level2 hasAnchor" number="1.2">
-<h2><span class="header-section-number">1.2</span> Modeling goal:<a href="index.html#modeling-goal" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>This dataset contains an airline passenger satisfaction survey.We want to know what factors are highly correlated to a satisfied (or dissatisfied) passenger, and try to model and predict passenger satisfaction.</p>
-</div>
-<div id="the-models-we-intend-to-use" class="section level2 hasAnchor" number="1.3">
-<h2><span class="header-section-number">1.3</span> The models we intend to use:<a href="index.html#the-models-we-intend-to-use" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>random forest(white box), lightGBM(black box), KNN(black box), logistic regression(white box)</p>
-
-<p>From the plot_missing function, we can see that there are some missing values in the arrival delay variable. We will use the mice package to deal with them.
-<img src="STAT-5293-Final-Project_files/figure-html/unnamed-chunk-5-1.png" width="672" /><img src="STAT-5293-Final-Project_files/figure-html/unnamed-chunk-5-2.png" width="672" />
-The result from mice shows that we have imputated all the missing values successfully</p>
+<div id="cat-boost" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">Chapter 4</span> Cat Boost<a href="cat-boost.html#cat-boost" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Lastly, we are going to set up and try catboost</p>
+<p><img src="STAT-5293-Final-Project_files/figure-html/unnamed-chunk-34-1.png" width="672" /><img src="STAT-5293-Final-Project_files/figure-html/unnamed-chunk-34-2.png" width="672" /></p>
 <pre><code>## 
 ##  iter imp variable
 ##   1   1  Arrival.Delay.in.Minutes
@@ -375,62 +332,76 @@ The result from mice shows that we have imputated all the missing values success
 ## 3  0  0     constant Type.of.Travel
 ## 4  0  0     constant          Class
 ## 5  0  0     constant   satisfaction</code></pre>
-<p>We will visualize the numercial variables below
-<img src="STAT-5293-Final-Project_files/figure-html/unnamed-chunk-7-1.png" width="672" /><img src="STAT-5293-Final-Project_files/figure-html/unnamed-chunk-7-2.png" width="672" /></p>
-<p><img src="STAT-5293-Final-Project_files/figure-html/unnamed-chunk-8-1.png" width="672" /><img src="STAT-5293-Final-Project_files/figure-html/unnamed-chunk-8-2.png" width="672" />
-Here we check distribution of the score variables. Those are more categorical than numerical.
-<img src="STAT-5293-Final-Project_files/figure-html/unnamed-chunk-9-1.png" width="672" /><img src="STAT-5293-Final-Project_files/figure-html/unnamed-chunk-9-2.png" width="672" />
-Here we display histogram to demonstrate distribution of character variables. We find that the genders of customers are quite balanced. Majority of the travels are business travels. There are more neutral or dissatisfied reviews than satisfied, but not by a large margin.</p>
-<p><img src="STAT-5293-Final-Project_files/figure-html/unnamed-chunk-10-1.png" width="672" /><img src="STAT-5293-Final-Project_files/figure-html/unnamed-chunk-10-2.png" width="672" /><img src="STAT-5293-Final-Project_files/figure-html/unnamed-chunk-10-3.png" width="672" /></p>
-<pre><code>##        X              Inflight.wifi.service Departure.Arrival.time.convenient
-##  Min.   :-0.0043215   Min.   :-0.00249      Min.   :-0.004861                
-##  1st Qu.:-0.0008216   1st Qu.: 0.12121      1st Qu.: 0.011893                
-##  Median : 0.0007393   Median : 0.13472      Median : 0.070119                
-##  Mean   : 0.0669499   Mean   : 0.26709      Mean   : 0.176147                
-##  3rd Qu.: 0.0016382   3rd Qu.: 0.34005      3rd Qu.: 0.218589                
-##  Max.   : 1.0000000   Max.   : 1.00000      Max.   : 1.000000                
-##  Ease.of.Online.booking Gate.location       Food.and.drink     
-##  Min.   :0.001913       Min.   :-0.035428   Min.   :-0.002162  
-##  1st Qu.:0.030944       1st Qu.:-0.002494   1st Qu.: 0.032185  
-##  Median :0.038833       Median : 0.002313   Median : 0.059073  
-##  Mean   :0.224940       Mean   : 0.145529   Mean   : 0.233672  
-##  3rd Qu.:0.420518       3rd Qu.: 0.170661   3rd Qu.: 0.404512  
-##  Max.   :1.000000       Max.   : 1.000000   Max.   : 1.000000  
-##  Online.boarding     Seat.comfort       Inflight.entertainment
-##  Min.   :0.001002   Min.   :0.0000435   Min.   :-0.004861     
-##  1st Qu.:0.078926   1st Qu.:0.0496160   1st Qu.: 0.083950     
-##  Median :0.204462   Median :0.1226578   Median : 0.299691     
-##  Mean   :0.256455   Mean   :0.2683176   Mean   : 0.339342     
-##  3rd Qu.:0.367796   3rd Qu.:0.4973836   3rd Qu.: 0.515371     
-##  Max.   :1.000000   Max.   :1.0000000   Max.   : 1.000000     
-##  On.board.service   Leg.room.service    Baggage.handling     Checkin.service   
-##  Min.   :-0.02837   Min.   :-0.005873   Min.   :-0.0005263   Min.   :-0.03543  
-##  1st Qu.: 0.06398   1st Qu.: 0.064434   1st Qu.: 0.0554440   1st Qu.: 0.06525  
-##  Median : 0.13197   Median : 0.123950   Median : 0.0957927   Median : 0.15314  
-##  Mean   : 0.25072   Mean   : 0.212240   Mean   : 0.2433687   Mean   : 0.18395  
-##  3rd Qu.: 0.38782   3rd Qu.: 0.327593   3rd Qu.: 0.3738770   3rd Qu.: 0.21879  
-##  Max.   : 1.00000   Max.   : 1.000000   Max.   : 1.0000000   Max.   : 1.00000  
-##  Inflight.service      Cleanliness      
-##  Min.   :-0.0001341   Min.   :-0.00383  
-##  1st Qu.: 0.0522451   1st Qu.: 0.05248  
-##  Median : 0.0887792   Median : 0.12322  
-##  Mean   : 0.2451461   Mean   : 0.27344  
-##  3rd Qu.: 0.3867554   3rd Qu.: 0.49464  
-##  Max.   : 1.0000000   Max.   : 1.00000</code></pre>
-<p><img src="STAT-5293-Final-Project_files/figure-html/unnamed-chunk-11-1.png" width="672" />
-By displaying the correlation matrix, we can see that arrival delay and departure delay have really high correlation, which is very obvious. If a flight takes off late, it is very likely to arrive late as well. The other numerical variables don’t correlate with each other, as they are supposed to be.
-Variables that fall into the “customer in-flight experience” area such as food and drink, in-flight entertainment and seat comfort have positive correlation with each other. The reason might be that airline companies manage these factors under one department/plan. If they decide to improve the food and drink, they might improve the in-flight entertainment as well. But it is surprised to see that in-flight service has no correlation with cleanness.<br />
-Variables such as WiFi service, online booking, and gate location tend to have a positive correlation. In speculation, larger airline companies might have better online booking sites, get access to good gate locations and so on.</p>
+<p>Details of the catboost model</p>
+<pre><code>## Catboost 
+## 
+## 103904 samples
+##     22 predictor
+##      2 classes: &#39;neutral.or.dissatisfied&#39;, &#39;satisfied&#39; 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (3 fold) 
+## Summary of sample sizes: 69270, 69270, 69268 
+## Resampling results across tuning parameters:
+## 
+##   depth  iterations  Accuracy   Kappa    
+##   4      100         0.9517343  0.9013730
+##   4      200         0.9591161  0.9164248
+##   4      300         0.9610121  0.9202933
+##   6      100         0.9607523  0.9197698
+##   6      200         0.9636492  0.9256961
+##   6      300         0.9638320  0.9260832
+##   8      100         0.9637262  0.9258584
+##   8      200         0.9642266  0.9268986
+##   8      300         0.9639186  0.9262829
+## 
+## Tuning parameter &#39;learning_rate&#39; was held constant at a value of 0.1
+## 
+## Tuning parameter &#39;rsm&#39; was held constant at a value of 0.95
+## Tuning
+##  parameter &#39;border_count&#39; was held constant at a value of 64
+## Accuracy was used to select the optimal model using the largest value.
+## The final values used for the model were depth = 8, learning_rate =
+##  0.1, iterations = 200, l2_leaf_reg = 0.1, rsm = 0.95 and border_count = 64.</code></pre>
+<p>Results of catboost model</p>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##                          Reference
+## Prediction                neutral or dissatisfied satisfied
+##   neutral or dissatisfied                   14263       625
+##   satisfied                                   310     10778
+##                                                
+##                Accuracy : 0.964                
+##                  95% CI : (0.9617, 0.9662)     
+##     No Information Rate : 0.561                
+##     P-Value [Acc &gt; NIR] : &lt; 0.00000000000000022
+##                                                
+##                   Kappa : 0.9267               
+##                                                
+##  Mcnemar&#39;s Test P-Value : &lt; 0.00000000000000022
+##                                                
+##             Sensitivity : 0.9452               
+##             Specificity : 0.9787               
+##          Pos Pred Value : 0.9720               
+##          Neg Pred Value : 0.9580               
+##              Prevalence : 0.4390               
+##          Detection Rate : 0.4149               
+##    Detection Prevalence : 0.4269               
+##       Balanced Accuracy : 0.9620               
+##                                                
+##        &#39;Positive&#39; Class : satisfied            
+## </code></pre>
+<p>From the variable importance plot, wifi service has really high importance, and then type of travel and online-boarding.
+<img src="STAT-5293-Final-Project_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
 
-</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="logistic-regression.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="random-forest.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="reflections.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -461,7 +432,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/bowend5/bd2652/edit/main/index.Rmd",
+"link": "https://github.com/bowend5/bd2652/edit/main/Cat-Boost.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -469,7 +440,7 @@ gitbook.start({
 "text": null
 },
 "view": {
-"link": "https://github.com/bowend5/bd2652/blob/main/index.Rmd",
+"link": "https://github.com/bowend5/bd2652/blob/main/Cat-Boost.Rmd",
 "text": null
 },
 "download": null,

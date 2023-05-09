@@ -1,4 +1,4 @@
-book_filename: "finalproj"
+book_filename: "STAT 5293 Final Project"
 output_dir: docs
 delete_merged_file: true
 edit: https://github.com/bowend5/bd2652/edit/main/%s
@@ -10,10 +10,11 @@ language:
 rmd_files: [
   'index.Rmd',
   'EDA.rmd',
-  'model1.Rmd',
-  'model2.Rmd',
-  'model3.Rmd',
+  'Logistic-Regression.Rmd',
+  'Random-Forest.Rmd',
+  'Cat-Boost.Rmd',
   'reflections.Rmd'
+  
   ]
 
 

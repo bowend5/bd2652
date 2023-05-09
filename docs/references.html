@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 3 [Model 2] | EDA</title>
-  <meta name="description" content="Chapter 3 [Model 2] | EDA" />
+  <title>Chapter 6 References | Final project: Airline Passenger Satisfaction Classification</title>
+  <meta name="description" content="Chapter 6 References | Final project: Airline Passenger Satisfaction Classification" />
   <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 3 [Model 2] | EDA" />
+  <meta property="og:title" content="Chapter 6 References | Final project: Airline Passenger Satisfaction Classification" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 3 [Model 2] | EDA" />
+  <meta name="twitter:title" content="Chapter 6 References | Final project: Airline Passenger Satisfaction Classification" />
   
   
   
@@ -23,15 +23,15 @@
 <meta name="author" content="Bowen Dong" />
 
 
-<meta name="date" content="2023-04-18" />
+<meta name="date" content="2023-05-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="model-1.html"/>
-<link rel="next" href="model-3.html"/>
+<link rel="prev" href="reflections.html"/>
+
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -78,9 +78,9 @@
 <li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#modeling-goal"><i class="fa fa-check"></i><b>1.2</b> Modeling goal:</a></li>
 <li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#the-models-we-intend-to-use"><i class="fa fa-check"></i><b>1.3</b> The models we intend to use:</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="model-1.html"><a href="model-1.html"><i class="fa fa-check"></i><b>2</b> [Model 1]</a></li>
-<li class="chapter" data-level="3" data-path="model-2.html"><a href="model-2.html"><i class="fa fa-check"></i><b>3</b> [Model 2]</a></li>
-<li class="chapter" data-level="4" data-path="model-3.html"><a href="model-3.html"><i class="fa fa-check"></i><b>4</b> [Model 3]</a></li>
+<li class="chapter" data-level="2" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>2</b> Logistic Regression</a></li>
+<li class="chapter" data-level="3" data-path="random-forest.html"><a href="random-forest.html"><i class="fa fa-check"></i><b>3</b> Random Forest</a></li>
+<li class="chapter" data-level="4" data-path="cat-boost.html"><a href="cat-boost.html"><i class="fa fa-check"></i><b>4</b> Cat Boost</a></li>
 <li class="chapter" data-level="5" data-path="reflections.html"><a href="reflections.html"><i class="fa fa-check"></i><b>5</b> Reflections</a></li>
 <li class="chapter" data-level="6" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>6</b> References</a></li>
 <li class="divider"></li>
@@ -94,7 +94,7 @@
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">EDA</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Final project: Airline Passenger Satisfaction Classification</a>
           </h1>
         </div>
 
@@ -102,28 +102,11 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="model-2" class="section level1 hasAnchor" number="3">
-<h1><span class="header-section-number">Chapter 3</span> [Model 2]<a href="model-2.html#model-2" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Then we will try the Random Forest model</p>
-<p>Results of Random Forest model</p>
-<pre><code>## [1] 0.9631198</code></pre>
-<p>Details of the random forest model</p>
-<pre><code>## 
-## Call:
-##  randomForest(formula = satisfaction ~ Gender + Customer.Type +      Age + Type.of.Travel + Class + Flight.Distance + Inflight.wifi.service +      Departure.Arrival.time.convenient + Ease.of.Online.booking +      Gate.location + Food.and.drink + Online.boarding + Seat.comfort +      Inflight.entertainment + On.board.service + Leg.room.service +      Baggage.handling + Checkin.service + Inflight.service + Cleanliness +      Departure.Delay.in.Minutes + Arrival.Delay.in.Minutes, data = train,      controls = cforest_control(mtry = 2, mincriterion = 0)) 
-##                Type of random forest: classification
-##                      Number of trees: 500
-## No. of variables tried at each split: 4
-## 
-##         OOB estimate of  error rate: 3.71%
-## Confusion matrix:
-##                         neutral or dissatisfied satisfied class.error
-## neutral or dissatisfied                   57695      1184  0.02010904
-## satisfied                                  2667     42358  0.05923376</code></pre>
-<p>We can see that the random forest model did yield better accuracy than the logistic regression model. From the variable importance plot, the online-boarding, wifi-service and class variables have the most importance.
-<img src="finalproj_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
-<p>Although random forest is not very interpretable, there are some ways; One of them is partial dependence plot. Obviously we can not create partial plots for every variable; To connect with a challenge that we encounter earlier, we will build a partial dependence plot between the ‘Departure delay’ variable and the target variable. We can see that after 150, it is very unlikely for passengers to give a satisfied feedback. It is demonstrated that the dissatisfaction accumulates very quickly after the delay is more than 30 minutes. This variable is behaving a lot more normal in the random forest model.
-<img src="finalproj_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
+<div id="references" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">Chapter 6</span> References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p><a href="https://hackernoon.com/random-forest-regression-in-r-code-and-interpretation" class="uri">https://hackernoon.com/random-forest-regression-in-r-code-and-interpretation</a>
+<a href="https://catboost.ai/en/docs/concepts/r-usages-examples" class="uri">https://catboost.ai/en/docs/concepts/r-usages-examples</a>
+<a href="https://rpubs.com/raoulbia/interpreting_glm_logistic_regression_output" class="uri">https://rpubs.com/raoulbia/interpreting_glm_logistic_regression_output</a></p>
 
 </div>
             </section>
@@ -131,8 +114,8 @@
           </div>
         </div>
       </div>
-<a href="model-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="model-3.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="reflections.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -163,7 +146,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/bowend5/bd2652/edit/main/Random-Forest.Rmd",
+"link": "https://github.com/bowend5/bd2652/edit/main/reflections.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -171,7 +154,7 @@ gitbook.start({
 "text": null
 },
 "view": {
-"link": "https://github.com/bowend5/bd2652/blob/main/Random-Forest.Rmd",
+"link": "https://github.com/bowend5/bd2652/blob/main/reflections.Rmd",
 "text": null
 },
 "download": null,

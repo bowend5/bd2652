@@ -1,5 +1,5 @@
-# [Model 3]
-We are going to set up and try catboost
+# Cat Boost
+Lastly, we are going to set up and try catboost
 
 ```{r}
 library(catboost)
@@ -55,12 +55,12 @@ test$satisfaction <- factor(test$satisfaction)
 
 ```
 
-```{r}
-# set x and y 
+```{r,include=FALSE}
+
 x <- train[,-23]
 y <- train$satisfaction
 
-# use caret for grid search 
+
 fit_control <- caret::trainControl(
   method = "cv", 
   number = 3, 
@@ -79,7 +79,7 @@ grid <- expand.grid(
 )
 
 # train catboost
-mod_cat <- train(
+model <- train(
   x = x, 
   y = as.factor(make.names(y)),
   method = catboost.caret,
@@ -92,11 +92,12 @@ mod_cat <- train(
 )
 
 ```
-
+Details of the catboost model
 ```{r}
 print(mod_cat)
 ```
 
+Results of catboost model
 ```{r}
 coef <- varImp(mod_cat, scale = FALSE)
 pred <- predict(mod_cat, test[,-23]) %>% as.data.frame() %>% rename('predict'='.')
@@ -111,8 +112,11 @@ catboost_confm <- confusionMatrix(pred$predict, answer$answer,positive = 'satisf
 catboost_confm
 ```
 
-
+From the variable importance plot, wifi service has really high importance, and then type of travel and online-boarding. 
 ```{r}
 plot(coef)
 ```
+
+
+
 

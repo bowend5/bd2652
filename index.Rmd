@@ -1,5 +1,5 @@
 --- 
-title: "Final project proposal"
+title: "Final project: Airline Passenger Satisfaction Classification"
 author: "Bowen Dong"
 date: "`r Sys.Date()`"
 output:

@@ -6,4 +6,11 @@
   It is very different for logistic regression. The top three variables with most importance are type of travel, customer type and checkin service, which is vastly different from the machine learning models. 
   In conclusion, from the models we tested, we have seen that the major factors of customer satisfaction wifi service, type of travel, online boarding and customer service. It is interesting that all models have accuracies over 92% but their features show different behaviors. 
   
+  
+# References
+
+https://hackernoon.com/random-forest-regression-in-r-code-and-interpretation
+https://catboost.ai/en/docs/concepts/r-usages-examples
+https://rpubs.com/raoulbia/interpreting_glm_logistic_regression_output
+
 

@@ -1,11 +1,7 @@
----
-title: "EDA"
-output: html_document
-date: "2023-04-18"
----
+
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
 ```
 
 ```{r}
@@ -41,6 +37,7 @@ options(scipen=999) # erase 'e' in number
 options(warn = -1)
 
 ```
+From the plot_missing function, we can see that there are some missing values in the arrival delay variable. We will use the mice package to deal with them. 
 ```{r}
 
 # Train data
@@ -51,16 +48,17 @@ plot_missing(test,title='NA value in Test dataset')
 
 
 ```
+The result from mice shows that we have imputated all the missing values successfully
 ```{r}
-miceresult <- mice::mice(train,seed=123,m=5)#the m is the number of divide
+miceresult <- mice::mice(train,seed=123,m=5)
 miceresult
-train <- mice::complete(miceresult,1) #remove the missing values in the train set
+train <- mice::complete(miceresult,1) 
 miceresult <- mice::mice(test,seed=123,m=5)
 miceresult
-test <- mice::complete(miceresult,1)#remove the missing values in the test set
+test <- mice::complete(miceresult,1)
 ```
 
-
+We will visualize the numercial variables below
 ```{r}
 age1<- ggplot(data = train, aes( x = Age)) + 
   geom_density(fill="lightblue", color="black", alpha=0.8) +
@@ -135,7 +133,7 @@ depart1/depart2
 #Check the distribution of numerical features
 
 ```
-
+Here we check distribution of the score variables. Those are more categorical than numerical.
 ```{r}
 train %>% 
   dplyr::select(,9:16) %>% 
@@ -149,6 +147,7 @@ train %>%
 #Check distribution of the score variables. Those are more categorical than numerical
 
 ```
+Here we display histogram to demonstrate distribution of character variables. We find that the genders of customers are quite balanced. Majority of the travels are business travels. There are more neutral or dissatisfied reviews than satisfied, but not by a large margin. 
 
 ```{r}
 c5 <- train %>% 
@@ -204,19 +203,19 @@ c4 <- train %>%
 c1/c2
 c3/c4
 c5
-#Here we display histogram to demonstrate distribution of character variables. We find that the genders of customers are quite balanced. Majority of the travels are business travels. There are more neutral or dissatisfied reviews than satisfied, but not by a large margin. 
 
 ```
-
 
 
 
 
 ```{r}
-#Correlation matrix
+
 df_cor2 <- cor(select_if(subset(train, select=-c(id, Age, Flight.Distance,Departure.Delay.in.Minutes,Arrival.Delay.in.Minutes)), is.numeric))
 summary(df_cor2)
 options(repr.plot.width = 14, repr.plot.height = 8)
 corrplot(df_cor2, na.label=" ", tl.cex=1, tl.col="black", method="color")
 ```
-
+By displaying the correlation matrix, we can see that arrival delay and departure delay have really high correlation, which is very obvious. If a flight takes off late, it is very likely to arrive late as well. The other numerical variables don't correlate with each other, as they are supposed to be. 
+  Variables that fall into the "customer in-flight experience" area such as food and drink, in-flight entertainment and seat comfort have positive correlation with each other. The reason might be that airline companies manage these factors under one department/plan. If they decide to improve the food and drink, they might improve the in-flight entertainment as well. But it is surprised to see that in-flight service has no correlation with cleanness.  
+  Variables such as WiFi service, online booking, and gate location tend to have a positive correlation. In speculation, larger airline companies might have better online booking sites, get access to good gate locations and so on. 

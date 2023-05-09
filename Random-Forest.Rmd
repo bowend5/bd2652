@@ -1,0 +1,48 @@
+# Random Forest
+Then we will try the Random Forest model
+```{r}
+set.seed(5293)
+library(party)
+library(randomForest)
+```
+Results of Random Forest model
+
+```{r}
+mod_rf=randomForest(satisfaction ~ Gender + Customer.Type + Age + Type.of.Travel + 
+    Class + Flight.Distance + Inflight.wifi.service + Departure.Arrival.time.convenient + 
+    Ease.of.Online.booking + Gate.location + Food.and.drink + 
+    Online.boarding + Seat.comfort + Inflight.entertainment + 
+    On.board.service + Leg.room.service + Baggage.handling + 
+    Checkin.service + Inflight.service + Cleanliness + Departure.Delay.in.Minutes + 
+    Arrival.Delay.in.Minutes, data=train, controls=cforest_control(mtry=2, mincriterion=0))
+```
+```{r}
+test <- rbind(train[1, ] , test)
+test <- test[-1,]
+```
+
+```{r}
+pred=predict(mod_rf,test,type='class')
+accuracy=mean(pred==test$satisfaction)
+accuracy
+```
+
+Details of the random forest model
+```{r}
+print(mod_rf)
+```
+
+We can see that the random forest model did yield better accuracy than the logistic regression model. From the variable importance plot, the online-boarding, wifi-service and class variables have the most importance. 
+```{r}
+varImpPlot(mod_rf)
+
+```
+
+Although random forest is not very interpretable, there are some ways; One of them is partial dependence plot. Obviously we can not create partial plots for every variable; To connect with a challenge that we encounter earlier, we will build a partial dependence plot between the 'Departure delay' variable and the target variable. We can see that after 150, it is very unlikely for passengers to give a satisfied feedback. It is demonstrated that the dissatisfaction accumulates very quickly after the delay is more than 30 minutes. This variable is behaving a lot more normal in the random forest model. 
+```{r}
+partialPlot(mod_rf, test, Departure.Delay.in.Minutes, "satisfied")
+```
+
+
+
+
